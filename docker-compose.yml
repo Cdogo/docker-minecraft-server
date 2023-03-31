@@ -1,16 +1,25 @@
-version: "3.8"
+# docker-compose.yml
+version: "3.3"
 
 services:
   mc:
     image: itzg/minecraft-server
-    environment:
-      EULA: "true"
     ports:
-      - "25565:25565"
+      - 25565:25565
+    environment:
+      EULA: "TRUE"
+
+      SERVER_NAME: "Our Minecraft Server"
+      MOTD: "First Peaceful World"
+
+      DIFFICULTY: "hard"
+
+      # https://github.com/itzg/docker-minecraft-server#memory-limit
+      MEMORY: 2G
+
+      # uncomment this to import a saved game. (put your savegame directory in the saves-to-import directory)
+      # WORLD: "/worlds/My-World"
+
     volumes:
-      - data:/data
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
-volumes:
-  data: {}
+      - ./minecraft-data:/data
+      - ./saves-to-import:/worlds:ro
